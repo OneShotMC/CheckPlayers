@@ -20,8 +20,8 @@ public class ChatUtil {
             this.color = chatColor;
         }
 
-        public void sendMessage(String message, Player... players){
-            ChatUtil.sendMessage(message,players);
+        public void sendMessage(String message, Player player){
+            ChatUtil.sendMessage(formatMessage(message),player);
         }
 
         public String formatMessage(String message){
@@ -29,9 +29,7 @@ public class ChatUtil {
         }
     }
 
-    static public void sendMessage(String message, Player... players){
-        for(Player player : players){
-            player.sendMessage(message);
-        }
+    static public void sendMessage(String message, Player player){
+        player.sendMessage(message);
     }
 }
