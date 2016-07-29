@@ -1,0 +1,9 @@
+name: CheckPlayers
+main: com.oneshotmc.checkplayers.CheckPlayers
+version: 1
+description: Look at your players
+commands:
+  checkplayers:
+    description: Check the players on your server to see if they are doing anything bad.
+    permission: checkplayers.use
+    usage: /checkplayers [start / stop ]
