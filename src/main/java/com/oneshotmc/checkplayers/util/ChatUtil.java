@@ -11,7 +11,8 @@ public class ChatUtil {
     public enum Types{
         WARNING (ChatColor.YELLOW),
         SUCCESS (ChatColor.GREEN),
-        ERROR (ChatColor.RED);
+        ERROR (ChatColor.RED),
+        NEUTRAL (ChatColor.BLUE);
 
         private ChatColor color;
 
