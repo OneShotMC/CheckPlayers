@@ -15,6 +15,7 @@ public class PlayerChecker {
     private int size;
     private List<PlayerLocation> players;
     private Player player;
+    private boolean switchedRecently = false;
     public PlayerChecker(Player player,List<PlayerLocation> players){
         this.players = players;
         this.size = players.size();
@@ -31,6 +32,13 @@ public class PlayerChecker {
             this.player.teleport(player.getPlayer().getLocation());
         else
             this.player.teleport(player.getLocation());
+        switchedRecently = true;
+        CheckPlayers.instace.getServer().getScheduler().scheduleSyncDelayedTask(CheckPlayers.instace, new Runnable() {
+            @Override
+            public void run() {
+                switchedRecently = false;
+            }
+        }, 6);
         return atomicInteger.get();
     }
 
@@ -44,6 +52,14 @@ public class PlayerChecker {
             this.player.teleport(player.getPlayer().getLocation());
         else
             this.player.teleport(player.getLocation());
+        switchedRecently = true;
+        switchedRecently = true;
+        CheckPlayers.instace.getServer().getScheduler().scheduleSyncDelayedTask(CheckPlayers.instace, new Runnable() {
+            @Override
+            public void run() {
+                switchedRecently = false;
+            }
+        }, 6);
         return atomicInteger.get();
     }
 
@@ -67,6 +83,10 @@ public class PlayerChecker {
             prevValue = size - 1;
         }
         return players.get(prevValue);
+    }
+
+    public boolean switchedRecently() {
+        return switchedRecently;
     }
 
     private void updateSize(){

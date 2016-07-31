@@ -47,6 +47,8 @@ public class CheckPlayers extends JavaPlugin implements Listener {
         PlayerChecker playerChecker = playersChecking.get(player.getUniqueId());
         if(playerChecker == null)
             return;
+        if(playerChecker.switchedRecently())
+            return;
         Action action = event.getAction();
         switch (action){
             case LEFT_CLICK_AIR:
