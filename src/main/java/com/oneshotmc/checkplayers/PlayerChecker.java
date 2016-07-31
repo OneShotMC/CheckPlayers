@@ -25,7 +25,7 @@ public class PlayerChecker {
     public int doNext(){
         PlayerLocation player = next();
         if(player.isOnline())
-            ChatUtil.Types.NEUTRAL.sendMessage(ChatColor.BOLD + "Staking #"+atomicInteger.get() + " "+player.getPlayer().getName(),this.player);
+            ChatUtil.Types.NEUTRAL.sendMessage(ChatColor.BOLD + "Stalking #"+atomicInteger.get() + " "+player.getPlayer().getName(),this.player);
         else
             ChatUtil.Types.WARNING.sendMessage(ChatColor.BOLD + "Stalking #"+atomicInteger.get()+ " OfflinePlayer: "+player.getPlayer().getName(),this.player);
         if(player.isOnline())
@@ -45,7 +45,7 @@ public class PlayerChecker {
     public int doPrev(){
         PlayerLocation player = previous();
         if(player.isOnline())
-            ChatUtil.Types.NEUTRAL.sendMessage(ChatColor.BOLD + "Staking #"+atomicInteger.get() + " "+player.getPlayer().getName(), this.player);
+            ChatUtil.Types.NEUTRAL.sendMessage(ChatColor.BOLD + "Stalking #"+atomicInteger.get() + " "+player.getPlayer().getName(), this.player);
         else
             ChatUtil.Types.WARNING.sendMessage(ChatColor.BOLD + "Stalking #"+atomicInteger.get()+ " OfflinePlayer: "+player.getPlayer().getName(), this.player);
         if(player.isOnline())
