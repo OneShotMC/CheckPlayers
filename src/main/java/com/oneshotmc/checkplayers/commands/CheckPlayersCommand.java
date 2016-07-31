@@ -45,8 +45,13 @@ public class CheckPlayersCommand implements CommandExecutor {
                     if(player.getUniqueId().equals(otherUUID))
                         playerLocationsIterator.remove();
                 }
-                checkPlayers.getPlayersChecking().put(pUUID, new PlayerChecker(player,otherPlayers));
-                ChatUtil.Types.SUCCESS.sendMessage("Starting to check all players",player);
+                if(otherPlayers.size() == 0){
+                    ChatUtil.Types.WARNING.sendMessage("There are no other players to check!", player);
+                }
+                else {
+                    checkPlayers.getPlayersChecking().put(pUUID, new PlayerChecker(player, otherPlayers));
+                    ChatUtil.Types.SUCCESS.sendMessage("Starting to check all players", player);
+                }
                 break;
             case "stop":
                 checkPlayers.getPlayersChecking().remove(pUUID);
