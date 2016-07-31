@@ -12,6 +12,7 @@ public class PlayerLocation {
 
     public PlayerLocation(Player player) {
         this.player = player;
+        this.checkLocation = player.getLocation();
     }
 
     public boolean isOnline(){

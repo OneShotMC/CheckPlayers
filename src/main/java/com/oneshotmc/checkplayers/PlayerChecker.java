@@ -55,11 +55,6 @@ public class PlayerChecker {
             atomicInteger.set(0);
             nextValue = 0;
         }
-        if(!players.get(nextValue).isOnline()) {
-            players.remove(nextValue);
-            updateSize();
-            return next();
-        }
         return players.get(nextValue);
     }
 
@@ -70,11 +65,6 @@ public class PlayerChecker {
         if(prevValue < 0){
             atomicInteger.set(size - 1);
             prevValue = size - 1;
-        }
-        if(!players.get(prevValue).isOnline()) {
-            players.remove(prevValue);
-            updateSize();
-            return previous();
         }
         return players.get(prevValue);
     }
