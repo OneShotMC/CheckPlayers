@@ -1,5 +1,6 @@
 package com.oneshotmc.checkplayers;
 
+import com.oneshotmc.checkplayers.util.ChatUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -12,29 +13,41 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class PlayerChecker {
     private AtomicInteger atomicInteger = new AtomicInteger(0);
     private int size;
-    private List<Player> players;
+    private List<PlayerLocation> players;
     private Player player;
-    public PlayerChecker(Player player,List<Player> players){
+    public PlayerChecker(Player player,List<PlayerLocation> players){
         this.players = players;
         this.size = players.size();
         this.player = player;
     }
 
     public int doNext(){
-        Player player = next();
-        this.player.sendMessage(ChatColor.BLUE+""+ChatColor.BOLD+"Stalking #"+atomicInteger.get()+" "+player.getName());
-        this.player.teleport(player);
+        PlayerLocation player = next();
+        if(player.isOnline())
+            ChatUtil.Types.NEUTRAL.sendMessage(ChatColor.BOLD + "Staking #"+atomicInteger.get() + " "+player.getPlayer().getName(),this.player);
+        else
+            ChatUtil.Types.WARNING.sendMessage(ChatColor.BOLD + "Stalking #"+atomicInteger.get()+ " OfflinePlayer: "+player.getPlayer().getName(),this.player);
+        if(player.isOnline())
+            this.player.teleport(player.getPlayer().getLocation());
+        else
+            this.player.teleport(player.getLocation());
         return atomicInteger.get();
     }
 
     public int doPrev(){
-        Player player = previous();
-        this.player.sendMessage(ChatColor.BLUE+""+ChatColor.BOLD+"Stalking #"+atomicInteger.get()+" "+player.getName());
-        this.player.teleport(player);
+        PlayerLocation player = previous();
+        if(player.isOnline())
+            ChatUtil.Types.NEUTRAL.sendMessage(ChatColor.BOLD + "Staking #"+atomicInteger.get() + " "+player.getPlayer().getName(), this.player);
+        else
+            ChatUtil.Types.WARNING.sendMessage(ChatColor.BOLD + "Stalking #"+atomicInteger.get()+ " OfflinePlayer: "+player.getPlayer().getName(), this.player);
+        if(player.isOnline())
+            this.player.teleport(player.getPlayer().getLocation());
+        else
+            this.player.teleport(player.getLocation());
         return atomicInteger.get();
     }
 
-    private Player next(){
+    private PlayerLocation next(){
         if(size == 0)
             return null;
         int nextValue = atomicInteger.incrementAndGet();
@@ -50,7 +63,7 @@ public class PlayerChecker {
         return players.get(nextValue);
     }
 
-    private Player previous(){
+    private PlayerLocation previous(){
         if(size == 0)
             return null;
         int prevValue = atomicInteger.decrementAndGet();

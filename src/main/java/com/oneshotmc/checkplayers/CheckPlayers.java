@@ -7,8 +7,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerKickEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashMap;
@@ -18,6 +16,7 @@ import java.util.UUID;
  * Created by UltraX3 on 6/21/2016.
  */
 public class CheckPlayers extends JavaPlugin implements Listener {
+    static CheckPlayers instace;
     private HashMap<UUID, PlayerChecker> playersChecking;
     private ChatUtil chatUtil;
 
@@ -26,6 +25,7 @@ public class CheckPlayers extends JavaPlugin implements Listener {
         playersChecking = new HashMap<>();
         getServer().getPluginCommand("checkplayers").setExecutor(new CheckPlayersCommand(this));
         getServer().getPluginManager().registerEvents(this,this);
+        instace = this;
     }
 
     @Override
@@ -59,20 +59,5 @@ public class CheckPlayers extends JavaPlugin implements Listener {
                 break;
         }
         event.setCancelled(true);
-    }
-
-    @EventHandler
-    public void onLeave(PlayerQuitEvent event){
-        unregister(event.getPlayer());
-    }
-
-    @EventHandler
-    public void onKick(PlayerKickEvent event){
-        unregister(event.getPlayer());
-    }
-
-    void unregister(Player player){
-        UUID pUUID = player.getUniqueId();
-        playersChecking.remove(pUUID);
     }
 }

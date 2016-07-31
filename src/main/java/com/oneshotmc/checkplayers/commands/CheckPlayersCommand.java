@@ -2,6 +2,7 @@ package com.oneshotmc.checkplayers.commands;
 
 import com.oneshotmc.checkplayers.CheckPlayers;
 import com.oneshotmc.checkplayers.PlayerChecker;
+import com.oneshotmc.checkplayers.PlayerLocation;
 import com.oneshotmc.checkplayers.util.ChatUtil;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -9,6 +10,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
@@ -32,10 +34,17 @@ public class CheckPlayersCommand implements CommandExecutor {
         switch (args[0]){
             case "start":
                 //We need to do this because Server#getOnlinePlayers() is unmodifiable
-                List<Player> otherPlayers = new ArrayList<>();
-                otherPlayers.addAll((List<Player>) checkPlayers.getServer().getOnlinePlayers());
+                List<PlayerLocation> otherPlayers = new ArrayList<>();
+                for(Player onlinePlayer : checkPlayers.getServer().getOnlinePlayers())
+                    otherPlayers.add(new PlayerLocation(onlinePlayer));
                 //We don't want to check ourselves!!!
-                otherPlayers.remove(player);
+                Iterator<PlayerLocation> playerLocationsIterator = otherPlayers.iterator();
+                while(playerLocationsIterator.hasNext()){
+                    PlayerLocation playerLocation = playerLocationsIterator.next();
+                    UUID otherUUID = playerLocation.getPlayer().getUniqueId();
+                    if(player.getUniqueId().equals(otherUUID))
+                        playerLocationsIterator.remove();
+                }
                 checkPlayers.getPlayersChecking().put(pUUID, new PlayerChecker(player,otherPlayers));
                 ChatUtil.Types.SUCCESS.sendMessage("Starting to check all players",player);
                 break;
