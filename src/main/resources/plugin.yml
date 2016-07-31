@@ -5,5 +5,7 @@ description: Look at your players
 commands:
   checkplayers:
     description: Check the players on your server to see if they are doing anything bad.
+    aliases: ["cp"]
     permission: checkplayers.use
-    usage: /checkplayers [start / stop ]
+    usage: "§cIncorrect syntax. Use /checkplayers [start / stop ]"
+    permission-message: '§cYou do not have permission to use that command.'
